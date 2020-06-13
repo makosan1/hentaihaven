@@ -17,6 +17,12 @@ const fetch: typeof node_fetch = async (...args) => {
 
 fetch.isRedirect = node_fetch.isRedirect;
 
+const build_query = (options: { [K: string]: any }) => '?' + Object.entries(options).map(([key, value]) => {
+    value = value?.toISOString?.() ?? value.toString();
+
+    return `${key}=${encodeURIComponent(value)}`;
+}).join('&');
+
 export type HentaiHavenOptions = {
     fetch_options?: RequestInit,
     timeout?: number
