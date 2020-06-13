@@ -57,6 +57,6 @@ export type APIImage = {
         image_meta: any
     },
     post: number,
-    source_urL: string,
+    source_url: string,
     _links: WPLinks<'author' | 'replies'>
 };
