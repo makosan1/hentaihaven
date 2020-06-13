@@ -124,10 +124,8 @@ export class HentaiHavenAPI {
         return data;
     }
 
-    public async get_video_image(video: string | number | HentaiHavenVideo): Promise<Omit<APIImage, '_links'>> {
-        if (video instanceof HentaiHavenVideo) video = video.raw.featured_media;
-
-        const response = await this.api_fetch<APIImage>(`http://hentaihaven.org/wp-json/wp/v2/media/${video}`);
+    public async get_video_image(video: HentaiHavenVideo): Promise<Omit<APIImage, '_links'>> {
+        const response = await this.api_fetch<APIImage>(`http://hentaihaven.org/wp-json/wp/v2/media/${video.raw.featured_media}`);
 
         if ('error' in response) return null;
 
