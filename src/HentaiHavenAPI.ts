@@ -56,10 +56,11 @@ export class HentaiHavenAPI {
     }
 
     constructor(private options?: HentaiHavenOptions) {
-        this.options = Object.assign({}, {
+        this.options = {
             fetch_options: {},
-            timeout: 5000
-        }, options);
+            timeout: 10000,
+            ...options
+        };
 
         if (HentaiHavenAPI.tags) return;
 
