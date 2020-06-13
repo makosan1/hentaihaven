@@ -14,7 +14,7 @@ export class HentaiHavenVideo {
         return this.data.id;
     }
 
-    public get date_created() {
+    public get date_aired() {
         return this.data.date;
     }
 
