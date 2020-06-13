@@ -77,7 +77,7 @@ export class HentaiHavenAPI {
                 return response.data;
             });
         
-            return [...response.data, ...(await Promise.all(tag_pages)).flat(Infinity)];
+            return [...response.data, ...(await Promise.all(tag_pages)).flat(Infinity) as APITag[]];
         });
     }
 
