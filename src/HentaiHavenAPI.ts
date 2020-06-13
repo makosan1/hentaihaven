@@ -136,8 +136,8 @@ export class HentaiHavenAPI {
         return data;
     }
 
-    public async search(query: string);
-    public async search(request: APISearchRequest);
+    public async search(query: string): Promise<HentaiHavenSearch>
+    public async search(request: APISearchRequest): Promise<HentaiHavenSearch>
     public async search(query: string | APISearchRequest) {
         if (typeof query == 'string') query = {
             search: query
