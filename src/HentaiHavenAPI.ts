@@ -6,6 +6,8 @@ import { APIVideo } from './api-types/APIVideo';
 import { HentaiHavenVideo } from './HentaiHavenVideo';
 import { APISeries } from './api-types/APISeries';
 import { APIImage } from './api-types/APIImage';
+import { APISearchRequest } from './api-types/APISearchRequest';
+import { HentaiHavenSearch } from './HentaiHavenSearch';
 
 const fetch: typeof node_fetch = async (...args) => {
     const response = await node_fetch(...args);
@@ -132,6 +134,26 @@ export class HentaiHavenAPI {
         const { _links, ...data } = response;
 
         return data;
+    }
+
+    public async search(query: string);
+    public async search(request: APISearchRequest);
+    public async search(query: string | APISearchRequest) {
+        if (typeof query == 'string') query = {
+            search: query
+        };
+
+        query = { per_page: 100, ...query };
+
+        const results = await this.api_search(query);
+
+        if ('error' in results) return null;
+
+        return new HentaiHavenSearch(results, await HentaiHavenAPI.get_tags());
+    }
+
+    private async api_search(request: APISearchRequest) {
+        return await this.api_fetch<WPPaginatedResponse<APIVideo>>(`http://hentaihaven.org/wp-json/wp/v2/posts${build_query(request)}`);
     }
 
     private async api_fetch<T>(url: string, options?: RequestInit): Promise<T | {
